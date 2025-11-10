@@ -125,6 +125,8 @@ describe('TSCManagerServer', () => {
       expect(response.status).toBe(200);
       const data = await response.json() as { tasks: Array<{ instructions: string }> };
       expect(data.tasks).toBeDefined();
+      expect(Array.isArray(data.tasks)).toBe(true);
+      expect(data.tasks.length).toBeGreaterThan(0);
       // Script tags should be removed
       expect(data.tasks[0].instructions).not.toContain('<script>');
     });
