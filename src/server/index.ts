@@ -55,9 +55,35 @@ export class TSCManagerServer {
       crossOriginResourcePolicy: { policy: "cross-origin" },
     }));
 
-    // CORS - allow embedding
+    // CORS - configurable for embedding
+    // In production, set ALLOWED_ORIGINS environment variable to restrict origins
+    const allowedOrigins = process.env.ALLOWED_ORIGINS 
+      ? process.env.ALLOWED_ORIGINS.split(',') 
+      : ['http://localhost:3000', 'http://localhost:*'];
+    
     this.app.use(cors({
-      origin: true, // Allow all origins for embedding
+      origin: (origin, callback) => {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        
+        // Check if origin is in allowed list or matches pattern
+        const isAllowed = allowedOrigins.some(allowed => {
+          if (allowed === '*') return true;
+          if (allowed.includes('*')) {
+            // Replace all asterisks with .* for regex matching
+            const pattern = allowed.split('*').join('.*');
+            const regex = new RegExp(`^${pattern}$`);
+            return regex.test(origin);
+          }
+          return allowed === origin;
+        });
+        
+        if (isAllowed) {
+          callback(null, true);
+        } else {
+          callback(new Error('Not allowed by CORS'));
+        }
+      },
       credentials: true,
     }));
 
@@ -270,12 +296,35 @@ export class TSCManagerServer {
   }
 
   private sanitizeInput(input: string): string {
-    // Remove any HTML tags and dangerous characters
-    return input
-      .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-      .replace(/<[^>]*>/g, '')
-      .trim()
-      .slice(0, 1000); // Limit length
+    // Comprehensive input sanitization to prevent XSS
+    // This is a defense-in-depth measure; CSP headers provide additional protection
+    
+    // Limit input length first to prevent ReDoS
+    let sanitized = input.slice(0, 10000); // Pre-limit to reasonable size
+    
+    // Remove all HTML tags using a simple, non-backtracking approach
+    // Split and filter is safer than regex for untrusted input
+    sanitized = sanitized.split('<').map((part, index) => {
+      if (index === 0) return part; // Keep first part before any <
+      const closeIndex = part.indexOf('>');
+      return closeIndex >= 0 ? part.substring(closeIndex + 1) : part;
+    }).join('');
+    
+    // Remove dangerous URL schemes (replace all occurrences)
+    const dangerousSchemes = ['javascript:', 'data:', 'vbscript:'];
+    for (const scheme of dangerousSchemes) {
+      while (sanitized.toLowerCase().includes(scheme)) {
+        sanitized = sanitized.replace(new RegExp(scheme, 'gi'), '');
+      }
+    }
+    
+    // Remove event handlers (replace all occurrences)
+    while (/on\w+\s*=/i.test(sanitized)) {
+      sanitized = sanitized.replace(/on\w+\s*=/gi, '');
+    }
+    
+    // Final trim and limit length
+    return sanitized.trim().slice(0, 1000);
   }
 
   public start(): void {
