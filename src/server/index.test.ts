@@ -23,7 +23,7 @@ describe('TSCManagerServer', () => {
       const response = await fetch(`http://localhost:${TEST_PORT}/health`);
       expect(response.status).toBe(200);
       
-      const data = await response.json();
+      const data = await response.json() as { status: string; timestamp: string };
       expect(data.status).toBe('ok');
       expect(data.timestamp).toBeDefined();
     });
@@ -34,7 +34,7 @@ describe('TSCManagerServer', () => {
       const response = await fetch(`http://localhost:${TEST_PORT}/api/tasks`);
       expect(response.status).toBe(401);
       
-      const data = await response.json();
+      const data = await response.json() as { error: string };
       expect(data.error).toBe('API key required');
     });
 
@@ -44,7 +44,7 @@ describe('TSCManagerServer', () => {
       });
       expect(response.status).toBe(403);
       
-      const data = await response.json();
+      const data = await response.json() as { error: string };
       expect(data.error).toBe('Invalid API key');
     });
 
@@ -68,7 +68,7 @@ describe('TSCManagerServer', () => {
       });
       
       expect(response.status).toBe(200);
-      const data = await response.json();
+      const data = await response.json() as { tasks: unknown[] };
       expect(data.tasks).toEqual([]);
     });
   });
@@ -88,7 +88,7 @@ describe('TSCManagerServer', () => {
       });
       
       expect(response.status).toBe(200);
-      const data = await response.json();
+      const data = await response.json() as { tasks: unknown[] };
       expect(data.tasks).toBeDefined();
       expect(Array.isArray(data.tasks)).toBe(true);
     });
@@ -104,7 +104,7 @@ describe('TSCManagerServer', () => {
       });
       
       expect(response.status).toBe(400);
-      const data = await response.json();
+      const data = await response.json() as { error: string };
       expect(data.error).toContain('Instruction is required');
     });
 
@@ -123,7 +123,7 @@ describe('TSCManagerServer', () => {
       });
       
       expect(response.status).toBe(200);
-      const data = await response.json();
+      const data = await response.json() as { tasks: Array<{ instructions: string }> };
       expect(data.tasks).toBeDefined();
       // Script tags should be removed
       expect(data.tasks[0].instructions).not.toContain('<script>');
@@ -137,7 +137,7 @@ describe('TSCManagerServer', () => {
       });
       
       expect(response.status).toBe(200);
-      const data = await response.json();
+      const data = await response.json() as { platforms: unknown[] };
       expect(data.platforms).toBeDefined();
       expect(Array.isArray(data.platforms)).toBe(true);
     });
@@ -150,7 +150,7 @@ describe('TSCManagerServer', () => {
       });
       
       expect(response.status).toBe(200);
-      const data = await response.json();
+      const data = await response.json() as { approvals: unknown[] };
       expect(data.approvals).toBeDefined();
       expect(Array.isArray(data.approvals)).toBe(true);
     });
