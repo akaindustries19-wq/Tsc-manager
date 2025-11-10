@@ -253,7 +253,7 @@ export class TSCManagerServer {
     });
 
     // Error handling middleware
-    this.app.use((err: Error, req: Request, res: Response) => {
+    this.app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
       console.error('Server error:', err);
       res.status(500).json({ error: 'Internal server error' });
     });
