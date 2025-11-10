@@ -24,7 +24,13 @@ A comprehensive AI management system that orchestrates AI agents across multiple
 
 ### Platform Integrations
 
-- **WixPlatform**: Website creation and management
+- **WixPlatform**: Website creation and management with Wix SDK integration
+  - Page creation, updating, and deletion
+  - Site publishing and deployment
+  - SEO optimization
+  - Site management and monitoring
+  - Works in mock mode without credentials for testing
+  - Supports real Wix API integration with proper credentials
 - **SlackPlatform**: Team communication and notifications
 - **GitHubPlatform**: Repository management and CI/CD automation
 - **BingCopilotPlatform**: Search and research capabilities
@@ -111,6 +117,16 @@ const aiManager = new AIManager({
   autoApprove: false,
   platforms: [
     {
+      platform: PlatformType.WIX,
+      enabled: true,
+      credentials: {
+        apiKey: 'your-wix-api-key',
+        accountId: 'your-account-id',
+        siteId: 'your-site-id',
+        accessToken: 'your-oauth-access-token'
+      }
+    },
+    {
       platform: PlatformType.GITHUB,
       enabled: true,
       credentials: {
@@ -126,6 +142,81 @@ const aiManager = new AIManager({
     }
   ]
 });
+```
+
+## Wix Platform Setup
+
+The TSC Manager includes full support for Wix site management through the Wix JavaScript SDK. The platform can operate in two modes:
+
+### Mock Mode (Default)
+
+Works without any credentials - perfect for development, testing, and demos:
+
+```typescript
+const aiManager = new AIManager({ autoApprove: true });
+await aiManager.processInstruction('Create a landing page on Wix');
+// Returns mock results without requiring real Wix credentials
+```
+
+### Real Mode (Production)
+
+Connect to actual Wix sites using credentials from the [Wix Developer Platform](https://dev.wix.com/):
+
+1. **Get Wix Credentials**
+   - Sign up at [Wix Developers](https://dev.wix.com/)
+   - Create an app or use your existing site credentials
+   - Obtain your API Key, Account ID, Site ID, and/or OAuth Access Token
+
+2. **Configure Environment Variables**
+   ```bash
+   WIX_API_KEY=your_wix_api_key
+   WIX_ACCOUNT_ID=your_wix_account_id
+   WIX_SITE_ID=your_wix_site_id
+   WIX_ACCESS_TOKEN=your_oauth_access_token
+   ```
+
+3. **Initialize with Credentials**
+   ```typescript
+   import { AIManager, PlatformType } from 'tsc-manager';
+   
+   const aiManager = new AIManager({
+     autoApprove: true,
+     platforms: [
+       {
+         platform: PlatformType.WIX,
+         enabled: true,
+         credentials: {
+           apiKey: process.env.WIX_API_KEY,
+           accountId: process.env.WIX_ACCOUNT_ID,
+           siteId: process.env.WIX_SITE_ID,
+           accessToken: process.env.WIX_ACCESS_TOKEN
+         }
+       }
+     ]
+   });
+   ```
+
+### Supported Wix Operations
+
+- **Page Management**: Create, update, and delete pages
+- **Site Publishing**: Publish site changes to production
+- **SEO Optimization**: Optimize pages for search engines
+- **Site Information**: Retrieve site status and configuration
+
+### Example Usage
+
+```typescript
+// Create a new landing page
+await aiManager.processInstruction('Create a new landing page on Wix for our product launch');
+
+// Update existing page
+await aiManager.processInstruction('Update the homepage content on Wix');
+
+// Optimize for SEO
+await aiManager.processInstruction('Optimize the site for SEO on Wix');
+
+// Publish changes
+await aiManager.processInstruction('Publish the Wix site to production');
 ```
 
 ## API Reference

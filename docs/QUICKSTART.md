@@ -117,7 +117,42 @@ const aiManager = new AIManager({
 
 ## Available Platforms
 
-- **Wix**: Website creation and management
+### Wix Platform
+
+The **Wix Platform** supports website creation and management:
+
+**Mock Mode (No Credentials Required)**
+- Works out-of-the-box for testing and development
+- Returns simulated results
+- Perfect for demos and prototyping
+
+**Real Mode (With Credentials)**
+- Connects to actual Wix sites via Wix SDK
+- Requires API credentials from [Wix Developers](https://dev.wix.com/)
+- Supports real page management and site operations
+
+**Supported Operations:**
+- Create, update, and delete pages
+- Publish site changes
+- SEO optimization
+- Site information retrieval
+
+**Configuration:**
+```typescript
+{
+  platform: PlatformType.WIX,
+  enabled: true,
+  credentials: {
+    apiKey: process.env.WIX_API_KEY,
+    accountId: process.env.WIX_ACCOUNT_ID,
+    siteId: process.env.WIX_SITE_ID,
+    accessToken: process.env.WIX_ACCESS_TOKEN
+  }
+}
+```
+
+### Other Platforms
+
 - **Slack**: Team communication
 - **GitHub**: Repository and CI/CD management
 - **Bing Copilot**: Search and research

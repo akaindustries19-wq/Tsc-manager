@@ -17,40 +17,61 @@ async function main() {
   });
   console.log('');
 
-  // Example 1: Create a website task
-  console.log('Example 1: Website creation task');
+  // Example 1: Create a website page on Wix
+  console.log('Example 1: Create Wix landing page');
   await aiManager.processInstruction(
     'Create a new landing page on Wix for our product launch'
   );
-  console.log('');
+  console.log('✓ Wix page creation task completed\n');
 
-  // Example 2: Send a message via Slack
-  console.log('Example 2: Slack notification');
+  // Example 2: Update Wix site content
+  console.log('Example 2: Update Wix content');
+  await aiManager.processInstruction(
+    'Update the homepage on Wix with new product information'
+  );
+  console.log('✓ Wix content update completed\n');
+
+  // Example 3: Optimize Wix site for SEO
+  console.log('Example 3: Wix SEO optimization');
+  await aiManager.processInstruction(
+    'Optimize the Wix site for SEO with meta tags and sitemap'
+  );
+  console.log('✓ Wix SEO optimization completed\n');
+
+  // Example 4: Publish Wix site
+  console.log('Example 4: Publish Wix site');
+  await aiManager.processInstruction(
+    'Publish the Wix site to production'
+  );
+  console.log('✓ Wix site published\n');
+
+  // Example 5: Send a message via Slack
+  console.log('Example 5: Slack notification');
   await aiManager.processInstruction(
     'Send a message to the team on Slack about the deployment'
   );
-  console.log('');
+  console.log('✓ Slack notification sent\n');
 
-  // Example 3: GitHub repository task
-  console.log('Example 3: GitHub task');
+  // Example 6: GitHub repository task
+  console.log('Example 6: GitHub task');
   await aiManager.processInstruction(
     'Create a new GitHub repository for the project and set up CI/CD'
   );
-  console.log('');
+  console.log('✓ GitHub repository created\n');
 
-  // Example 4: Multi-platform task
-  console.log('Example 4: Multi-platform research task');
+  // Example 7: Multi-platform research task
+  console.log('Example 7: Multi-platform research task');
   await aiManager.processInstruction(
     'Search using Bing Copilot for best practices on API design, then summarize using Gemini'
   );
-  console.log('');
+  console.log('✓ Multi-platform research completed\n');
 
-  // Example 5: AI-assisted code review
-  console.log('Example 5: Code review with Claude');
+  // Example 8: AI-assisted code review
+  console.log('Example 8: Code review with Claude');
   await aiManager.processInstruction(
     'Review the latest pull request using Claude and provide feedback'
   );
-  console.log('');
+  console.log('✓ Code review completed\n');
 
   // Display task summary
   console.log('\n=== Task Summary ===');
