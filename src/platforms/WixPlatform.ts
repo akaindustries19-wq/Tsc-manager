@@ -19,13 +19,32 @@ export interface WixConfig {
 /**
  * Wix platform implementation with real API integration
  */
+function isWixConfig(obj: unknown): obj is WixConfig {
+  if (typeof obj !== 'object' || obj === null) return false;
+  const o = obj as Record<string, unknown>;
+  if (
+    (o.apiKey !== undefined && typeof o.apiKey !== 'string') ||
+    (o.accountId !== undefined && typeof o.accountId !== 'string') ||
+    (o.siteId !== undefined && typeof o.siteId !== 'string') ||
+    (o.accessToken !== undefined && typeof o.accessToken !== 'string')
+  ) {
+    return false;
+  }
+  return true;
+}
+
 export class WixPlatform extends BasePlatform {
   private wixClient: ReturnType<typeof createClient> | null = null;
   private wixConfig: WixConfig;
 
   constructor(config: Record<string, unknown> = {}) {
     super(config);
-    this.wixConfig = config as WixConfig;
+    if (isWixConfig(config)) {
+      this.wixConfig = config;
+    } else {
+      this.wixConfig = {};
+      console.warn('Invalid WixConfig provided; using empty config.');
+    }
   }
 
   getPlatformType(): PlatformType {
