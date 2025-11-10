@@ -2,6 +2,14 @@
 
 A comprehensive AI management system that orchestrates AI agents across multiple platforms including Wix, Slack, GitHub, Bing Copilot, Gemini, and Claude. The AI Manager delegates tasks, handles approvals, implements solutions, and verifies functionality across all integrated platforms.
 
+## ✨ New Features
+
+- **🎨 Modern Web UI**: Beautiful, responsive dashboard for managing AI agents
+- **🔌 REST API**: Complete API for programmatic access
+- **⚡ Real-time Updates**: WebSocket support for instant notifications
+- **🔒 Security**: API authentication, rate limiting, input sanitization, and security headers
+- **🌐 Embeddable**: Can be embedded in any webpage via iframe or web component
+
 ## Features
 
 - **Multi-Platform Support**: Integrate with Wix, Slack, GitHub, Bing Copilot, Gemini, and Claude
@@ -11,6 +19,42 @@ A comprehensive AI management system that orchestrates AI agents across multiple
 - **Priority Management**: Support for task prioritization (Low, Medium, High, Critical)
 - **Instruction Parsing**: Natural language instruction processing
 - **Extensible Architecture**: Easy to add new platforms and capabilities
+- **Web Dashboard**: Manage everything through an intuitive web interface
+- **REST API**: Programmatic access to all features
+- **Real-time Updates**: WebSocket notifications for task status changes
+
+## Quick Start
+
+### Web UI
+
+1. Install dependencies:
+```bash
+npm install
+```
+
+2. Start the web server:
+```bash
+npm run server
+```
+
+3. Open your browser:
+```
+http://localhost:3000
+```
+
+4. Start managing your AI agents through the web interface!
+
+### API Usage
+
+```bash
+# Submit an instruction via API
+curl -X POST http://localhost:3000/api/instructions \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: default-api-key" \
+  -d '{"instruction": "Create a landing page on Wix"}'
+```
+
+See [Web UI & API Documentation](docs/WEB_UI_API.md) for complete API reference.
 
 ## Architecture
 
@@ -21,6 +65,7 @@ A comprehensive AI management system that orchestrates AI agents across multiple
 3. **ApprovalManager**: Manages approval workflow for tasks
 4. **InstructionParser**: Parses user instructions and creates tasks
 5. **TaskDelegator**: Assigns tasks to appropriate agents and platforms
+6. **Web Server**: Express-based server with REST API and WebSocket support
 
 ### Platform Integrations
 
@@ -38,6 +83,16 @@ npm install
 ```
 
 ## Usage
+
+### Web Interface
+
+Start the server and use the web dashboard:
+
+```bash
+npm run server
+```
+
+Then open http://localhost:3000 in your browser.
 
 ### Basic Example
 
@@ -224,6 +279,8 @@ src/
 │   ├── BingCopilotPlatform.ts
 │   ├── GeminiPlatform.ts
 │   └── ClaudePlatform.ts
+├── server/             # Web server
+│   └── index.ts        # Express server with REST API
 ├── types/              # TypeScript type definitions
 │   └── index.ts
 ├── utils/              # Utility functions
@@ -275,6 +332,51 @@ export class CustomPlatform extends BasePlatform {
   }
 }
 ```
+
+## Embedding TSC Manager
+
+TSC Manager can be easily embedded in any webpage or application.
+
+### Method 1: iframe
+
+```html
+<iframe 
+  src="http://localhost:3000/?apiKey=your-api-key" 
+  width="100%" 
+  height="800px" 
+  frameborder="0"
+></iframe>
+```
+
+### Method 2: Web Component
+
+```html
+<!-- Include the widget script -->
+<script src="http://localhost:3000/widget.js"></script>
+
+<!-- Use the custom element -->
+<tsc-manager-widget 
+  api-key="your-api-key"
+  height="800px"
+></tsc-manager-widget>
+```
+
+See the [Web UI & API Documentation](docs/WEB_UI_API.md) for more details and examples.
+
+## Security Features
+
+- **API Key Authentication**: Secure API access
+- **Rate Limiting**: 100 requests per 15 minutes per IP
+- **Input Sanitization**: XSS protection
+- **Security Headers**: HSTS, CSP, X-Frame-Options
+- **CORS Support**: Configurable cross-origin requests
+- **Content Security Policy**: Prevents XSS attacks
+
+## Documentation
+
+- [Web UI & API Documentation](docs/WEB_UI_API.md) - Complete API reference and embedding guide
+- [Architecture Documentation](docs/ARCHITECTURE.md) - Detailed architecture overview
+- [Quick Start Guide](docs/QUICKSTART.md) - Get started quickly
 
 ## License
 

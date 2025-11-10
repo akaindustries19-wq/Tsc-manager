@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TSC Manager - Embed Example</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            padding: 2rem;
+            background: #f0f0f0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        .info {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .embed-container {
+            background: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        iframe {
+            width: 100%;
+            height: 800px;
+            border: none;
+            border-radius: 0.5rem;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.25rem;
+            font-family: 'Courier New', monospace;
+        }
+        .code-block {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        .code-block code {
+            background: none;
+            color: inherit;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 TSC Manager - Embedding Example</h1>
+        
+        <div class="info">
+            <h2>How to Embed TSC Manager</h2>
+            <p>You can embed the TSC Manager dashboard in your webpage using an iframe or as a Web Component.</p>
+            
+            <h3>Method 1: Using iframe</h3>
+            <div class="code-block">
+                <code>&lt;iframe 
+    src="http://localhost:3000/?apiKey=default-api-key" 
+    width="100%" 
+    height="800px" 
+    frameborder="0"
+    allow="web-share"
+&gt;&lt;/iframe&gt;</code>
+            </div>
+
+            <h3>Method 2: Using Web Component (Advanced)</h3>
+            <div class="code-block">
+                <code>&lt;script src="http://localhost:3000/widget.js"&gt;&lt;/script&gt;
+&lt;tsc-manager-widget api-key="default-api-key"&gt;&lt;/tsc-manager-widget&gt;</code>
+            </div>
+
+            <p><strong>Note:</strong> Replace <code>default-api-key</code> with your actual API key.</p>
+        </div>
+
+        <div class="embed-container">
+            <h2>Live Embedded Dashboard</h2>
+            <iframe 
+                src="http://localhost:3000/?apiKey=default-api-key"
+                title="TSC Manager Dashboard"
+                allow="web-share"
+            ></iframe>
+        </div>
+    </div>
+</body>
+</html>

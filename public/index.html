@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TSC Manager - AI Agent Management Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <meta name="description" content="Manage AI agents across multiple platforms">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <h1>🤖 TSC Manager</h1>
+                <p class="tagline">AI Agent Management Across Platforms</p>
+            </div>
+            <div class="connection-status">
+                <span id="status-indicator" class="status-indicator disconnected"></span>
+                <span id="status-text">Disconnected</span>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Instruction Input Section -->
+            <section class="instruction-section card">
+                <h2>Submit Instruction</h2>
+                <form id="instruction-form">
+                    <div class="form-group">
+                        <label for="instruction-input">What would you like the AI agents to do?</label>
+                        <textarea 
+                            id="instruction-input" 
+                            placeholder="E.g., Create a landing page on Wix for our product launch"
+                            rows="3"
+                            required
+                        ></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="user-id">User ID (Optional)</label>
+                        <input type="text" id="user-id" placeholder="your-user-id">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Instruction</button>
+                </form>
+            </section>
+
+            <!-- Statistics Section -->
+            <section class="stats-section">
+                <div class="stat-card card">
+                    <div class="stat-icon">📋</div>
+                    <div class="stat-content">
+                        <div class="stat-label">Total Tasks</div>
+                        <div class="stat-value" id="total-tasks">0</div>
+                    </div>
+                </div>
+                <div class="stat-card card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-content">
+                        <div class="stat-label">Completed</div>
+                        <div class="stat-value" id="completed-tasks">0</div>
+                    </div>
+                </div>
+                <div class="stat-card card">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-content">
+                        <div class="stat-label">In Progress</div>
+                        <div class="stat-value" id="inprogress-tasks">0</div>
+                    </div>
+                </div>
+                <div class="stat-card card">
+                    <div class="stat-icon">⚠️</div>
+                    <div class="stat-content">
+                        <div class="stat-label">Pending Approval</div>
+                        <div class="stat-value" id="pending-tasks">0</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pending Approvals Section -->
+            <section class="approvals-section card" id="approvals-section" style="display: none;">
+                <h2>Pending Approvals</h2>
+                <div id="approvals-list" class="approvals-list"></div>
+            </section>
+
+            <!-- Tasks Section -->
+            <section class="tasks-section card">
+                <div class="section-header">
+                    <h2>Tasks</h2>
+                    <div class="filter-controls">
+                        <select id="status-filter" class="filter-select">
+                            <option value="">All Status</option>
+                            <option value="PENDING">Pending</option>
+                            <option value="APPROVED">Approved</option>
+                            <option value="IN_PROGRESS">In Progress</option>
+                            <option value="COMPLETED">Completed</option>
+                            <option value="FAILED">Failed</option>
+                            <option value="REJECTED">Rejected</option>
+                        </select>
+                        <select id="platform-filter" class="filter-select">
+                            <option value="">All Platforms</option>
+                            <option value="WIX">Wix</option>
+                            <option value="SLACK">Slack</option>
+                            <option value="GITHUB">GitHub</option>
+                            <option value="BING_COPILOT">Bing Copilot</option>
+                            <option value="GEMINI">Gemini</option>
+                            <option value="CLAUDE">Claude</option>
+                        </select>
+                        <button id="refresh-btn" class="btn btn-secondary">🔄 Refresh</button>
+                    </div>
+                </div>
+                <div id="tasks-list" class="tasks-list">
+                    <div class="empty-state">
+                        <p>No tasks yet. Submit an instruction to get started!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Platforms Section -->
+            <section class="platforms-section card">
+                <h2>Available Platforms</h2>
+                <div id="platforms-list" class="platforms-list"></div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2024 TSC Manager. Built with ❤️ for AI orchestration.</p>
+        </footer>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
