@@ -366,8 +366,8 @@ function renderPlatforms() {
 
     platformsList.innerHTML = platforms.map(platform => `
         <div class="platform-item">
-            <div class="platform-icon">${platformIcons[platform.getPlatformType] || '📦'}</div>
-            <div class="platform-name">${platform.getPlatformType || 'Unknown'}</div>
+            <div class="platform-icon">${platformIcons[platform.getPlatformType()] || '📦'}</div>
+            <div class="platform-name">${platform.getPlatformType() || 'Unknown'}</div>
         </div>
     `).join('');
 }
