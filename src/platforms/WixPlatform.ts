@@ -132,8 +132,9 @@ export class WixPlatform extends BasePlatform {
    * Execute real Wix task using Wix SDK
    */
   private async executeRealWixTask(action: string): Promise<unknown> {
-    // Note: Actual Wix SDK API calls would go here
-    // This is a placeholder for real implementation
+    // TODO: Implement actual Wix SDK API calls using this.wixClient.
+    // The wixClient is initialized in performInitialization but not used here.
+    // This is a placeholder for real implementation; currently returns mock responses.
     console.log(`Executing real Wix action: ${action}`);
     
     switch (action) {
